@@ -167,10 +167,17 @@ class TeamTextbox extends preact.Component<{team: Team}> {
 
 					const top = Math.floor(num / 12) * 30;
 					const left = (num % 12) * 40;
-					const iconStyle = `background:transparent url(${Dex.resourcePrefix}sprites/pokemonicons-sheet.png) no-repeat scroll -${left}px -${top}px`;
+					//const iconStyle = `background:transparent url(${Dex.resourcePrefix}sprites/pokemonicons-sheet.png) no-repeat scroll -${left}px -${top}px`;
+					const iconStyle = Dex.getPokemonIcon(species);
+					console.log(iconStyle);
+					console.log('panel-teambuilder, pokemon: ' +species);
+
+					// return <span class="picon" style={
+					// 	`top:${prevOffset + 1}px;left:50px;position:absolute;${iconStyle}`
+					// }></span>;
 
 					return <span class="picon" style={
-						`top:${prevOffset + 1}px;left:50px;position:absolute;${iconStyle}`
+						`${iconStyle}`
 					}></span>;
 				})}
 				{this.activeOffsetY >= 0 &&

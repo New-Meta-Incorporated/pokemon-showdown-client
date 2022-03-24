@@ -179,16 +179,18 @@ const Dex = new class implements ModdedDex {
 
 	pokeballs: string[] | null = null;
 
-	resourcePrefix = (() => {
-		let prefix = '';
-		if (window.document?.location?.protocol !== 'http:') prefix = 'https:';
-		return `${prefix}//${window.Config ? Config.routes.client : 'play.pokemonshowdown.com'}/`;
-	})();
+	// resourcePrefix = (() => {
+	// 	let prefix = '';
+	// 	if (window.document?.location?.protocol !== 'http:') prefix = 'https:';
+	// 	return `${prefix}//${window.Config ? Config.routes.client : '51.210.182.114'}/`;
+	// })();
+	resourcePrefix = 'http://51.210.182.114/';
 
-	fxPrefix = (() => {
-		const protocol = (window.document?.location?.protocol !== 'http:') ? 'https:' : '';
-		return `${protocol}//${window.Config ? Config.routes.client : 'play.pokemonshowdown.com'}/fx/`;
-	})();
+	// fxPrefix = (() => {
+	// 	const protocol = (window.document?.location?.protocol !== 'http:') ? 'https:' : '';
+	// 	return `${protocol}//${window.Config ? Config.routes.client : '51.210.182.114'}/fx/`;
+	// })();
+	fxPrefix = 'http://51.210.182.114/fx/';
 
 	loadedSpriteData = {xy: 1, bw: 0};
 	moddedDexes: {[mod: string]: ModdedDex} = {};
@@ -692,34 +694,40 @@ const Dex = new class implements ModdedDex {
 		return num;
 	}
 
+	// getPokemonIcon(pokemon: string | Pokemon | ServerPokemon | PokemonSet | null, facingLeft?: boolean) {
+	// 	if (pokemon === 'pokeball') {
+	// 		return `background:transparent url(${Dex.resourcePrefix}sprites/pokemonicons-pokeball-sheet.png) no-repeat scroll -0px 4px`;
+	// 	} else if (pokemon === 'pokeball-statused') {
+	// 		return `background:transparent url(${Dex.resourcePrefix}sprites/pokemonicons-pokeball-sheet.png) no-repeat scroll -40px 4px`;
+	// 	} else if (pokemon === 'pokeball-fainted') {
+	// 		return `background:transparent url(${Dex.resourcePrefix}sprites/pokemonicons-pokeball-sheet.png) no-repeat scroll -80px 4px;opacity:.4;filter:contrast(0)`;
+	// 	} else if (pokemon === 'pokeball-none') {
+	// 		return `background:transparent url(${Dex.resourcePrefix}sprites/pokemonicons-pokeball-sheet.png) no-repeat scroll -80px 4px`;
+	// 	}
+
+	// 	let id = toID(pokemon);
+	// 	if (!pokemon || typeof pokemon === 'string') pokemon = null;
+	// 	// @ts-ignore
+	// 	if (pokemon?.speciesForme) id = toID(pokemon.speciesForme);
+	// 	// @ts-ignore
+	// 	if (pokemon?.species) id = toID(pokemon.species);
+	// 	// @ts-ignore
+	// 	if (pokemon?.volatiles?.formechange && !pokemon.volatiles.transform) {
+	// 		// @ts-ignore
+	// 		id = toID(pokemon.volatiles.formechange[1]);
+	// 	}
+	// 	let num = this.getPokemonIconNum(id, pokemon?.gender === 'F', facingLeft);
+
+	// 	let top = Math.floor(num / 12) * 30;
+	// 	let left = (num % 12) * 40;
+	// 	let fainted = ((pokemon as Pokemon | ServerPokemon)?.fainted ? `;opacity:.3;filter:grayscale(100%) brightness(.5)` : ``);
+	// 	return `background:transparent url(${Dex.resourcePrefix}sprites/pokemonicons-sheet.png?v7) no-repeat scroll -${left}px -${top}px${fainted}`;
+	// }
+
 	getPokemonIcon(pokemon: string | Pokemon | ServerPokemon | PokemonSet | null, facingLeft?: boolean) {
-		if (pokemon === 'pokeball') {
-			return `background:transparent url(${Dex.resourcePrefix}sprites/pokemonicons-pokeball-sheet.png) no-repeat scroll -0px 4px`;
-		} else if (pokemon === 'pokeball-statused') {
-			return `background:transparent url(${Dex.resourcePrefix}sprites/pokemonicons-pokeball-sheet.png) no-repeat scroll -40px 4px`;
-		} else if (pokemon === 'pokeball-fainted') {
-			return `background:transparent url(${Dex.resourcePrefix}sprites/pokemonicons-pokeball-sheet.png) no-repeat scroll -80px 4px;opacity:.4;filter:contrast(0)`;
-		} else if (pokemon === 'pokeball-none') {
-			return `background:transparent url(${Dex.resourcePrefix}sprites/pokemonicons-pokeball-sheet.png) no-repeat scroll -80px 4px`;
-		}
-
-		let id = toID(pokemon);
-		if (!pokemon || typeof pokemon === 'string') pokemon = null;
-		// @ts-ignore
-		if (pokemon?.speciesForme) id = toID(pokemon.speciesForme);
-		// @ts-ignore
-		if (pokemon?.species) id = toID(pokemon.species);
-		// @ts-ignore
-		if (pokemon?.volatiles?.formechange && !pokemon.volatiles.transform) {
-			// @ts-ignore
-			id = toID(pokemon.volatiles.formechange[1]);
-		}
-		let num = this.getPokemonIconNum(id, pokemon?.gender === 'F', facingLeft);
-
-		let top = Math.floor(num / 12) * 30;
-		let left = (num % 12) * 40;
+		var id=toID(pokemon);
 		let fainted = ((pokemon as Pokemon | ServerPokemon)?.fainted ? `;opacity:.3;filter:grayscale(100%) brightness(.5)` : ``);
-		return `background:transparent url(${Dex.resourcePrefix}sprites/pokemonicons-sheet.png?v7) no-repeat scroll -${left}px -${top}px${fainted}`;
+		return 'background:transparent url('+'http://51.210.182.114/'+'sprites/minicons/'+id+'.png) no-repeat'+fainted;
 	}
 
 	getTeambuilderSpriteData(pokemon: any, gen: number = 0): TeambuilderSpriteData {
