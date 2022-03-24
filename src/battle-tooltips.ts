@@ -742,6 +742,36 @@ class BattleTooltips {
 			if (move.flags.bullet) {
 				text += `<p class="movetag">&#x2713; Bullet-like <small>(doesn't affect Bulletproof pokemon)</small></p>`;
 			}
+			if (ability==='illuminate'){
+				text+="<p class=\"movetag\">&#x2713; Illuminate <small>(accuracy boosted x1.3)</small></p>";
+			}
+			if (move.flags.wind&&ability==='strongwinds'){
+				text+="<p class=\"movetag\">&#x2713; Wind <small>(boosted by Strong Winds)</small></p>";
+			}
+			if (move.flags.bullet&&ability==='artillery'){
+				text+="<p class=\"movetag\">&#x2713; Bullet-like <small>(boosted by Artillery)</small></p>";
+			}
+			if (move.flags.bite&&ability==='bloodsucker'){
+				text+="<p class=\"movetag\">&#x2713; Bite <small>(drain activated by Blood Sucker)</small></p>";
+			}
+			if (move.flags.kiss&&ability==='lovelylips'){
+				text+="<p class=\"movetag\">&#x2713; Kiss <small>(boosted by Lovely Lips)</small></p>";
+			}
+			if (move.flags.slap&&ability==='slapper'){
+				text+="<p class=\"movetag\">&#x2713; Tail <small>(boosted by Slapper)</small></p>";
+			}
+			if (move.flags.kick&&ability==='kicker'){
+				text+="<p class=\"movetag\">&#x2713; Kick <small>(boosted by Kicker)</small></p>";
+			}
+			if (move.flags.expert&&ability==='expert'){
+				text+="<p class=\"movetag\">&#x2713; Variable <small>(boosted by Expert)</small></p>";
+			}
+			if (move.flags.blade&&ability==='blademaster'){
+				text+="<p class=\"movetag\">&#x2713; Blade/Scratch <small>(boosted by Blade Master)</small></p>";
+			}
+			if (move.flags.pivot){
+				text+="<p class=\"movetag\">&#x2713; Pivot <small>(doesn't affect Fluffy Bond pokemon)</small></p>";
+			}
 		}
 		return text;
 	}
@@ -1080,11 +1110,20 @@ class BattleTooltips {
 		if (ability === 'hustle' || (ability === 'gorillatactics' && !clientPokemon?.volatiles['dynamax'])) {
 			stats.atk = Math.floor(stats.atk * 1.5);
 		}
+		if (ability === 'enthusiasm' && !(clientPokemon==null ? void 0:clientPokemon.volatiles['dynamax'])) {
+			stats.spa = Math.floor(stats.spa * 1.5);
+		}
 		if (weather) {
 			if (this.battle.gen >= 4 && this.pokemonHasType(pokemon, 'Rock') && weather === 'sandstorm') {
 				stats.spd = Math.floor(stats.spd * 1.5);
 			}
+			if (this.battle.gen >=4 && this.pokemonHasType(serverPokemon, 'Ice') && weather === 'hail') {
+				stats.def = Math.floor(stats.def * 1.5);
+			}
 			if (ability === 'sandrush' && weather === 'sandstorm') {
+				speedModifiers.push(2);
+			}
+			if (ability === 'toxicrush' && weather === 'toxiccloud') {
 				speedModifiers.push(2);
 			}
 			if (ability === 'slushrush' && weather === 'hail') {
@@ -1101,6 +1140,19 @@ class BattleTooltips {
 							if (!ally || ally.fainted) continue;
 							let allyAbility = this.getAllyAbility(ally);
 							if (allyAbility === 'Flower Gift' && (ally.getSpecies().baseSpecies === 'Cherrim' || this.battle.gen <= 4)) {
+								stats.atk = Math.floor(stats.atk * 1.5);
+								stats.spd = Math.floor(stats.spd * 1.5);
+							}
+						}
+					}
+				}
+				if (weather === 'hail') {
+					let allyActive = clientPokemon?.side.active;
+					if (allyActive) {
+						for (const ally of allyActive) {
+							if (!ally || ally.fainted) continue;
+							let allyAbility = this.getAllyAbility(ally);
+							if (allyAbility === 'Blizzard Gift' && (ally.getSpecies().baseSpecies === 'Yetitan' || this.battle.gen <= 4)) {
 								stats.atk = Math.floor(stats.atk * 1.5);
 								stats.spd = Math.floor(stats.spd * 1.5);
 							}
@@ -1134,6 +1186,10 @@ class BattleTooltips {
 		if (item === 'eviolite' && Dex.species.get(pokemon.speciesForme).evos) {
 			stats.def = Math.floor(stats.def * 1.5);
 			stats.spd = Math.floor(stats.spd * 1.5);
+		}
+		if (item === 'finalite' && Dex.species.get(pokemon.speciesForme).prevo && !Dex.species.get(pokemon.speciesForme).evos) {
+			stats.def = Math.floor(stats.def * 0.75);
+			stats.spd = Math.floor(stats.spd * 0.75);
 		}
 		if (ability === 'grasspelt' && this.battle.hasPseudoWeather('Grassy Terrain')) {
 			stats.def = Math.floor(stats.def * 1.5);
@@ -1487,6 +1543,13 @@ class BattleTooltips {
 			value.abilityModify(1.3, "Compound Eyes");
 		}
 
+		if (value.tryAbility('Enthusiasm') && move.category === 'Special') {
+			accuracyModifiers.push(3277);
+			value.abilityModify(0.8, "Enthusiasm");
+		}
+
+		value.abilityModify(1.3, "Illuminate");
+
 		if (value.tryItem('Wide Lens')) {
 			accuracyModifiers.push(4505);
 			value.itemModify(1.1, "Wide Lens");
@@ -1630,6 +1693,16 @@ class BattleTooltips {
 				value.weatherModify(2);
 			}
 		}
+		if (move.id === 'twister') {
+			if (this.battle.weather !== 'raindance') {
+				value.weatherModify(2);
+			}
+		}
+		if (move.id === 'solarflare') {
+			if (this.battle.weather !== 'sunnyday') {
+				value.weatherModify(2);
+			}
+		}
 		if (move.id === 'terrainpulse' && pokemon.isGrounded(serverPokemon)) {
 			if (
 				this.battle.hasPseudoWeather('Electric Terrain') ||
@@ -1751,11 +1824,26 @@ class BattleTooltips {
 		if (move.flags['sound']) {
 			value.abilityModify(1.3, "Punk Rock");
 		}
+		if (moveType === 'Steel' || moveType === 'Cosmic') {
+			value.abilityModify(1.2, "Radioactive");
+		}
+		if (move.flags['sound']) {
+			value.abilityModify(1.3, "Orchestral");
+		}
 		if (target) {
 			if (["MF", "FM"].includes(pokemon.gender + target.gender)) {
 				value.abilityModify(0.75, "Rivalry");
 			} else if (["MM", "FF"].includes(pokemon.gender + target.gender)) {
 				value.abilityModify(1.25, "Rivalry");
+			}
+		}
+		if (target) {
+			var targetWeight = target.getWeightKg();
+			var pokemonWeight = pokemon.getWeightKg(serverPokemon);
+			if(targetWeight >= pokemonWeight) {
+				value.abilityModify(0.75, "Predatory Instinct");
+			} else if (targetWeight < pokemonWeight){
+				value.abilityModify(1.5, "Predatory Instinct");
 			}
 		}
 		const noTypeOverride = [
@@ -1780,6 +1868,27 @@ class BattleTooltips {
 		}
 		if (move.recoil || move.hasCrashDamage) {
 			value.abilityModify(1.2, 'Reckless');
+		}
+		if (move.flags['wind']){
+			value.abilityModify(1.2,'Strong Winds');
+		}
+		if (move.flags['bullet']){
+			value.abilityModify(1.2,'Artillery');
+		}
+		if (move.flags['kiss']){
+			value.abilityModify(1.5,'Lovely Lips');
+		}
+		if (move.flags['slap']){
+			value.abilityModify(1.2,'Slapper');
+		}
+		if (move.flags['kick']){
+			value.abilityModify(1.2,'Kicker');
+		}
+		if (move.flags['expert']){
+			value.abilityModify(1.3,'Expert');
+		}
+		if (move.flags['blade']){
+			value.abilityModify(1.2,'Blade Master');
 		}
 
 		if (move.category !== 'Status') {
@@ -2307,6 +2416,10 @@ class BattleStatGuesser {
 			physicalBulk *= 1.5;
 			specialBulk *= 1.5;
 		}
+		if (itemid === 'finalite') {
+			physicalBulk *= 0.75;
+			specialBulk *= 0.75;
+		}
 		if (itemid === 'assaultvest') {
 			specialBulk *= 1.5;
 		}
@@ -2326,7 +2439,7 @@ class BattleStatGuesser {
 		} else if (abilityid === 'unburden' || abilityid === 'speedboost' || abilityid === 'motordrive') {
 			isFast = true;
 			moveCount['Ultrafast'] = 1;
-		} else if (abilityid === 'chlorophyll' || abilityid === 'swiftswim' || abilityid === 'sandrush') {
+		} else if (abilityid === 'chlorophyll' || abilityid === 'swiftswim' || abilityid === 'sandrush' || abilityid === 'toxicrush') {
 			isFast = true;
 			moveCount['Ultrafast'] = 2;
 		} else if (itemid === 'salacberry') {
