@@ -858,7 +858,7 @@
 				var pokemon = switchables[oIndex];
 				var tooltipArgs = 'switchpokemon|' + oIndex;
 				if (i < this.choice.done) {
-					switchMenu += '<button disabled="disabled" class="has-tooltip" data-tooltip="' + BattleLog.escapeHTML(tooltipArgs) + '"><span class="picon" style="' + Dex.getPokemonIcon(pokemon) + '"></span>' + BattleLog.escapeHTML(pokemon.name) + '</button> ';
+					switchMenu += '<button disabled="disabled" class="has-tooltip" data-tooltip="' + BattleLog.escapeHTML(tooltipArgs) + '"><span class="picon" style="' + Dex.getPokemonIcon(pokemon.name) + '"></span>' + BattleLog.escapeHTML(pokemon.name) + '</button> ';
 				} else {
 					switchMenu += '<button name="chooseTeamPreview" value="' + i + '" class="has-tooltip" data-tooltip="' + BattleLog.escapeHTML(tooltipArgs) + '"><span class="picon" style="' + Dex.getPokemonIcon(pokemon.name) + '"></span>' + BattleLog.escapeHTML(pokemon.name) + '</button> ';
 				}
