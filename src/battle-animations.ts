@@ -680,7 +680,12 @@ export class BattleScene implements BattleSceneStub {
 				pokemonhtml += `<span${tooltipCode} style="` + Dex.getPokemonIcon(poke.name, !side.isFar) + `;opacity:0.6" aria-label="${details}"></span>`;
 			} else {
 				const details = this.getDetailsText(poke);
-				pokemonhtml += `<span${tooltipCode} style="` + Dex.getPokemonIcon(poke.name, !side.isFar) + `" aria-label="${details}"></span>`;
+				if (poke.fainted) {
+					pokemonhtml += `<span${tooltipCode} style="` + Dex.getPokemonIcon(poke.name, !side.isFar) + `;opacity:0.6" aria-label="${details}"></span>`;
+				}
+				else {
+					pokemonhtml += `<span${tooltipCode} style="` + Dex.getPokemonIcon(poke.name, !side.isFar) + `" aria-label="${details}"></span>`;
+				}	
 			}
 			if (i % 3 === 2) pokemonhtml += `</div><div class="teamicons">`;
 		}
