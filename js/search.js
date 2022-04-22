@@ -236,7 +236,10 @@
 				pu: "PU",
 				zu: "ZU",
 				nfe: "NFE",
-				lc: "LC",
+				//lc: "LC",
+				lcuber: "LC UBER",
+				lcou: "LC OU",
+				lcuu: "LC UU",
 				cap: "CAP",
 				caplc: "CAP LC",
 				capnfe: "CAP NFE",
@@ -244,7 +247,7 @@
 				rubl: "RUBL",
 				nubl: "NUBL",
 				publ: "PUBL",
-        zubl: "ZUBL"
+        		zubl: "ZUBL"
 			};
 			var tier = {name: tierTable[id]};
 			return this.renderTierRow(tier, matchStart, matchLength, errorMessage);
