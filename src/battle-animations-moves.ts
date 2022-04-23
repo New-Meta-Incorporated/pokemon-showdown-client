@@ -35201,3 +35201,5 @@ BattleMoveAnims['dunewave']={anim:BattleMoveAnims['scorchingsands'].anim};
 BattleMoveAnims['nostalgia']={anim:BattleMoveAnims['calmmind'].anim};
 BattleMoveAnims['dreamwrecker']={anim:BattleMoveAnims['dreameater'].anim};
 BattleMoveAnims['aquaticgift']={anim:BattleMoveAnims['flipturn'].anim};
+BattleMoveAnims['beaconbarrage']={anim:BattleMoveAnims['photondischarge'].anim};
+BattleMoveAnims['misdirect']={anim:BattleMoveAnims['psychic'].anim};
