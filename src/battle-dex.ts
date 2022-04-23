@@ -698,7 +698,13 @@ const Dex = new class implements ModdedDex {
 
 	getPokemonIcon(pokemon: string | Pokemon | ServerPokemon | PokemonSet | null, facingLeft?: boolean) {
 		var id=toID(pokemon);
-		let iconName = String(pokemon).toLowerCase() + '.png';
+		let iconName = String(pokemon)
+			.toLowerCase()
+			.split(' ').join('')
+			.split('.').join('')
+			.split('é').join('e')
+			.split('’').join('')
+			+ '.png';
 		let fainted = ((pokemon as Pokemon | ServerPokemon)?.fainted ? `;opacity:.3;filter:grayscale(100%) brightness(.5)` : ``);
 		return 'background:transparent url('+'https://raw.githubusercontent.com/new-meta-incorporated/sprites/master/'+'sprites/icons/'+iconName+') no-repeat'+fainted;
 		//return 'background:transparent url('+'http://51.210.182.114/'+'sprites/minicons/'+id+'.png) no-repeat'+fainted;
