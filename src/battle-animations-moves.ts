@@ -35200,3 +35200,4 @@ BattleMoveAnims['windscythe']={anim:BattleMoveAnims['aerialace'].anim};
 BattleMoveAnims['dunewave']={anim:BattleMoveAnims['scorchingsands'].anim};
 BattleMoveAnims['nostalgia']={anim:BattleMoveAnims['calmmind'].anim};
 BattleMoveAnims['dreamwrecker']={anim:BattleMoveAnims['dreameater'].anim};
+BattleMoveAnims['aquaticgift']={anim:BattleMoveAnims['flipturn'].anim};
