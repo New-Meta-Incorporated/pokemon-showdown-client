@@ -1225,7 +1225,7 @@ class BattleTooltips {
 			stats.spd = Math.floor(stats.spd * 1.5);
 		}
     if (item === 'ngunishield') {
-			stats.spd = Math.floor(stats.def * 1.5);
+			stats.def = Math.floor(stats.def * 1.5);
 		}
 		if (item === 'deepseascale' && species === 'Clamperl') {
 			stats.spd *= 2;
