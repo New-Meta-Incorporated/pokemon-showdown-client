@@ -425,49 +425,49 @@ License: GPLv2
 .sunweather,
 .sunnydayweather,
 .desolatelandweather {
-	background: #FFEEBB url(../fx/weather-sunnyday.jpg) no-repeat scroll left top;
+	background: #FFEEBB url(https://raw.githubusercontent.com/new-meta-incorporated/sprites/master/fx/weather-sunnyday.jpg) no-repeat scroll left top;
 	color: #664411;
 }
 .rainweather,
 .raindanceweather,
 .primordialseaweather {
-	background: #99BBFF url(../fx/weather-raindance.jpg) no-repeat scroll left top;
+	background: #99BBFF url(https://raw.githubusercontent.com/new-meta-incorporated/sprites/master/fx/weather-raindance.jpg) no-repeat scroll left top;
 	color: #0044BB;
 }
 .sandstormweather {
-	background: #E6E0AC url(../fx/weather-sandstorm.png) no-repeat scroll left top;
+	background: #E6E0AC url(https://raw.githubusercontent.com/new-meta-incorporated/sprites/master/fx/weather-sandstorm.png) no-repeat scroll left top;
 	color: #554433;
 }
 .toxiccloudweather {
-	background: #E6E0AC url(../fx/weather-toxiccloud.png) no-repeat scroll left top;
+	background: #E6E0AC url(https://raw.githubusercontent.com/new-meta-incorporated/sprites/master/fx/weather-toxiccloud.png) no-repeat scroll left top;
 	color: #554433;
 }
 .hailweather {
-	background: #AADDEE url(../fx/weather-hail.png) no-repeat scroll left top;
+	background: #AADDEE url(https://raw.githubusercontent.com/new-meta-incorporated/sprites/master/fx/weather-hail.png) no-repeat scroll left top;
 	color: #114455;
 }
 .deltastreamweather {
-	background: #AAAAAA url(../fx/weather-strongwind.png) no-repeat scroll left top;
+	background: #AAAAAA url(https://raw.githubusercontent.com/new-meta-incorporated/sprites/master/fx/weather-strongwind.png) no-repeat scroll left top;
 	color: #666666;
 }
 .mistyterrainweather {
-	background: #EEAACC url(../fx/weather-mistyterrain.png) no-repeat scroll left top;
+	background: #EEAACC url(https://raw.githubusercontent.com/new-meta-incorporated/sprites/master/fx/weather-mistyterrain.png) no-repeat scroll left top;
 	color: #551144;
 }
 .electricterrainweather {
-	background: #EEEEAA url(../fx/weather-electricterrain.png) no-repeat scroll left top;
+	background: #EEEEAA url(https://raw.githubusercontent.com/new-meta-incorporated/sprites/master/fx/weather-electricterrain.png) no-repeat scroll left top;
 	color: #444411;
 }
 .grassyterrainweather {
-	background: #CCEEAA url(../fx/weather-grassyterrain.png) no-repeat scroll left top;
+	background: #CCEEAA url(https://raw.githubusercontent.com/new-meta-incorporated/sprites/master/fx/weather-grassyterrain.png) no-repeat scroll left top;
 	color: #335511;
 }
 .psychicterrainweather {
-	background: #CCAAEE url(../fx/weather-psychicterrain.png) no-repeat scroll left top;
+	background: #CCAAEE url(https://raw.githubusercontent.com/new-meta-incorporated/sprites/master/fx/weather-psychicterrain.png) no-repeat scroll left top;
 	color: #441155;
 }
 .pseudoweather {
-	background: #DDAAEE url(../fx/weather-trickroom.png) no-repeat scroll left top;
+	background: #DDAAEE url(https://raw.githubusercontent.com/new-meta-incorporated/sprites/master/fx/weather-trickroom.png) no-repeat scroll left top;
 	color: #661155;
 }
 
