@@ -199,6 +199,7 @@ class DexSearch {
 	}
 
 	getTier(species: Species) {
+		//console.log(this.typedSearch?.format);
 		return this.typedSearch?.getTier(species) || '';
 	}
 
@@ -551,7 +552,7 @@ abstract class BattleTypedSearch<T extends SearchType> {
 	set: PokemonSet | null = null;
 
 	protected formatType: 'doubles' | 'bdsp' | 'bdspdoubles' | 'letsgo' | 'metronome' | 'natdex' | 'nfe' |
-	'dlc1' | 'dlc1doubles' | 'stadium' | null = null;
+	'dlc1' | 'dlc1doubles' | 'stadium' | 'nmmegaz' | null = null;
 
 	/**
 	 * Cached copy of what the results list would be with only base filters
@@ -580,6 +581,10 @@ abstract class BattleTypedSearch<T extends SearchType> {
 			this.dex = Dex.forGen(gen);
 		} else if (!format) {
 			this.dex = Dex;
+		}
+
+		if (format.startsWith('megaz')) {
+			this.formatType = 'nmmegaz';
 		}
 
 		if (format.startsWith('dlc1')) {
@@ -793,13 +798,17 @@ abstract class BattleTypedSearch<T extends SearchType> {
 			this.formatType === 'dlc1' ? 'gen8dlc1' :
 			this.formatType === 'dlc1doubles' ? 'gen8dlc1doubles' :
 			this.formatType === 'stadium' ? `gen${gen}stadium${gen > 1 ? gen : ''}` :
+			this.formatType === 'nmmegaz' ? `nmmegaz` :
 			`gen${gen}`;
+		// console.log(this.formatType);
+		// console.log(tableKey);
 		if (table && table[tableKey]) {
 			table = table[tableKey];
 		}
 		if (!table) return pokemon.tier;
 
 		let id = pokemon.id;
+		//console.log(table);
 		if (id in table.overrideTier) {
 			return table.overrideTier[id];
 		}
@@ -876,7 +885,13 @@ class BattlePokemonSearch extends BattleTypedSearch<'pokemon'> {
 		let table = BattleTeambuilderTable;
 		if ((format.endsWith('cap') || format.endsWith('caplc')) && dex.gen < 8) {
 			table = table['gen' + dex.gen];
-		} else if (isVGCOrBS) {
+		}
+		else if (format.startsWith('megaz')) {
+			//console.log(format)
+			//console.log(table)
+			table = table['nmmegaz'];
+		} 
+		else if (isVGCOrBS) {
 			table = table['gen' + dex.gen + 'vgc'];
 		} else if (
 			table['gen' + dex.gen + 'doubles'] && dex.gen > 4 &&
@@ -918,6 +933,7 @@ class BattlePokemonSearch extends BattleTypedSearch<'pokemon'> {
 			table.tiers = null;
 		}
 		let tierSet: SearchRow[] = table.tierSet;
+		//console.log(table.tierSet);
 		let slices: {[k: string]: number} = table.formatSlices;
 		if (format === 'ubers' || format === 'uber') tierSet = tierSet.slice(slices.Uber);
 		else if (isVGCOrBS) {
@@ -940,6 +956,8 @@ class BattlePokemonSearch extends BattleTypedSearch<'pokemon'> {
 		else if(format==='lcuu')tierSet=tierSet.slice(slices['LC UU']);
 		else if(format==='cap')tierSet=tierSet.slice(0,slices.Uber).concat(tierSet.slice(slices.OU));
 		else if(format==='caplc')tierSet=tierSet.slice(slices['CAP LC'],slices.Uber).concat(tierSet.slice(slices.LC));
+		else if(format==='megazou')tierSet=tierSet.slice(slices['OU']);
+		else if(format==='megazzu')tierSet=tierSet.slice(slices['ZU']);
 
 		else if (format === 'anythinggoes' || format.endsWith('ag') || format.startsWith('ag')) {
 			tierSet = tierSet.slice(slices.AG);
