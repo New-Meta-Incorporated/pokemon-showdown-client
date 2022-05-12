@@ -323,12 +323,14 @@ process.stdout.write("Building `data/teambuilder-tables.js`... ");
 	const NFE = GENS.map(num => num + 0.3);
 	const STADIUM = [2.04, 1.04];
 	const OTHER = [8.6, 8.4, 8.2, 8.1, -8.4, -8.6, 7.1];
-	const NMMEGAZ = [8];
+	const NMMEGAZ = [8.7];
+	const NMMEGADEX = [8.8];
 
 	// process.stdout.write("\n  ");
-	for (const genIdent of [...GENS, ...DOUBLES, ...VGC, ...NFE, ...STADIUM, ...OTHER, ...NMMEGAZ]) {
+	for (const genIdent of [...GENS, ...DOUBLES, ...VGC, ...NFE, ...STADIUM, ...OTHER, ...NMMEGAZ, ...NMMEGADEX]) {
 		const isLetsGo = (genIdent === 7.1);
-		const isNMMEGAZ = (genIdent === 8);
+		const isNMMEGAZ = (genIdent === 8.7);
+		const isNMMEGADEX = (genIdent === 8.8);
 		const isBDSP = (genIdent === 8.6 || genIdent === -8.6);
 		const isMetBattle = (genIdent === 8.2);
 		const isNFE = ('' + genIdent).endsWith('.3');
@@ -343,6 +345,7 @@ process.stdout.write("Building `data/teambuilder-tables.js`... ");
 			if (isDLC1) genStr += 'dlc1';
 			if (isLetsGo) genStr += 'letsgo';
 			if (isNMMEGAZ) genStr == 'nmmegaz';
+			if (isNMMEGADEX) genStr == 'nmmegadex';
 			if (isBDSP) genStr += 'bdsp';
 			if (isStadium) genStr += 'stadium' + (genNum > 1 ? genNum : '');
 			return genStr;
@@ -441,6 +444,11 @@ process.stdout.write("Building `data/teambuilder-tables.js`... ");
 					if (species.tier === 'LC') return 'LC';
 					return 'Regular';
 				}
+				if (isNMMEGADEX) {
+					let tier = species.tier;
+					tier = Dex.mod('nmmegadex').species.get(species.name).tier;
+					return tier;
+				}
 				if (isNMMEGAZ) {
 					let tier = species.tier;
 					tier = Dex.mod('nmmegaz').species.get(species.name).tier;
@@ -455,9 +463,6 @@ process.stdout.write("Building `data/teambuilder-tables.js`... ");
 				return species.tier;
 			})();
 			overrideTier[species.id] = tier;
-			// if (isNMMEGAZ) {
-			// 	console.log(overrideTier['abomasnowmega']);
-			// }
 			if (species.forme) {
 				if (
 					[
@@ -534,8 +539,15 @@ process.stdout.write("Building `data/teambuilder-tables.js`... ");
 			BattleTeambuilderTable['nmmegaz'] = {};
 			BattleTeambuilderTable['nmmegaz'].learnsets = {};
 			BattleTeambuilderTable['nmmegaz'].tiers = tiers;
-			BattleTeambuilderTable['nmmegaz'].overrideTier = {};
+			BattleTeambuilderTable['nmmegaz'].overrideTier = overrideTier;
 			BattleTeambuilderTable['nmmegaz'].formatSlices = formatSlices;
+		}
+		else if (isNMMEGADEX) {
+			BattleTeambuilderTable['nmmegadex'] = {};
+			BattleTeambuilderTable['nmmegadex'].learnsets = {};
+			BattleTeambuilderTable['nmmegadex'].tiers = tiers;
+			BattleTeambuilderTable['nmmegadex'].overrideTier = overrideTier;
+			BattleTeambuilderTable['nmmegadex'].formatSlices = formatSlices;
 		}
 		else if (isBDSP && !isDoubles) {
 			BattleTeambuilderTable['gen8bdsp'] = {};
@@ -585,6 +597,9 @@ process.stdout.write("Building `data/teambuilder-tables.js`... ");
 				return ["Uber", "OU", "UU", "NFE", "LC UBER", "LC OU", "LC UU"];
 			}
 			if (isNMMEGAZ) {
+				return ["CAP", "CAP NFE", "CAP LC", "AG", "Uber", "(Uber)", "OU", "(OU)", "UUBL", "UU", "RUBL", "RU", "NUBL", "NU", "PUBL", "PU", "(PU)", "ZU", "(ZU)", "New", "NFE", "LC UBER", "LC OU", "LC UU", "Unreleased"];
+			}
+			if (isNMMEGADEX) {
 				return ["CAP", "CAP NFE", "CAP LC", "AG", "Uber", "(Uber)", "OU", "(OU)", "UUBL", "UU", "RUBL", "RU", "NUBL", "NU", "PUBL", "PU", "(PU)", "ZU", "(ZU)", "New", "NFE", "LC UBER", "LC OU", "LC UU", "Unreleased"];
 			}
 			if (isBDSP && !isDoubles) {
@@ -1143,7 +1158,6 @@ process.stdout.write("Building `data/pokedex.js`... ");
 	for (const id in Pokedex) {
 		const entry = Pokedex[id];
 		if (Dex.data.FormatsData[id]) {
-			// console.log('formatsentry:' + id);
 			const formatsEntry = Dex.data.FormatsData[id];
 			if (formatsEntry.tier) entry.tier = formatsEntry.tier;
 			if (formatsEntry.isNonstandard) entry.isNonstandard = formatsEntry.isNonstandard;

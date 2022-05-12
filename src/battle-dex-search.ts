@@ -199,7 +199,6 @@ class DexSearch {
 	}
 
 	getTier(species: Species) {
-		//console.log(this.typedSearch?.format);
 		return this.typedSearch?.getTier(species) || '';
 	}
 
@@ -552,7 +551,7 @@ abstract class BattleTypedSearch<T extends SearchType> {
 	set: PokemonSet | null = null;
 
 	protected formatType: 'doubles' | 'bdsp' | 'bdspdoubles' | 'letsgo' | 'metronome' | 'natdex' | 'nfe' |
-	'dlc1' | 'dlc1doubles' | 'stadium' | 'nmmegaz' | null = null;
+	'dlc1' | 'dlc1doubles' | 'stadium' | 'nmmegaz' | 'nmmegadex' | null = null;
 
 	/**
 	 * Cached copy of what the results list would be with only base filters
@@ -585,6 +584,10 @@ abstract class BattleTypedSearch<T extends SearchType> {
 
 		if (format.startsWith('megaz')) {
 			this.formatType = 'nmmegaz';
+		}
+
+		if (format === 'megaag' || format === 'megaou' || format === 'megauu') {
+			this.formatType = 'nmmegadex';
 		}
 
 		if (format.startsWith('dlc1')) {
@@ -799,16 +802,15 @@ abstract class BattleTypedSearch<T extends SearchType> {
 			this.formatType === 'dlc1doubles' ? 'gen8dlc1doubles' :
 			this.formatType === 'stadium' ? `gen${gen}stadium${gen > 1 ? gen : ''}` :
 			this.formatType === 'nmmegaz' ? `nmmegaz` :
+			this.formatType === 'nmmegadex' ? `nmmegadex` :
 			`gen${gen}`;
-		// console.log(this.formatType);
-		// console.log(tableKey);
+
 		if (table && table[tableKey]) {
 			table = table[tableKey];
 		}
 		if (!table) return pokemon.tier;
 
 		let id = pokemon.id;
-		//console.log(table);
 		if (id in table.overrideTier) {
 			return table.overrideTier[id];
 		}
@@ -886,11 +888,6 @@ class BattlePokemonSearch extends BattleTypedSearch<'pokemon'> {
 		if ((format.endsWith('cap') || format.endsWith('caplc')) && dex.gen < 8) {
 			table = table['gen' + dex.gen];
 		}
-		else if (format.startsWith('megaz')) {
-			//console.log(format)
-			//console.log(table)
-			table = table['nmmegaz'];
-		} 
 		else if (isVGCOrBS) {
 			table = table['gen' + dex.gen + 'vgc'];
 		} else if (
@@ -913,7 +910,14 @@ class BattlePokemonSearch extends BattleTypedSearch<'pokemon'> {
 			table = table['natdex'];
 		} else if (this.formatType === 'metronome') {
 			table = table['metronome'];
-		} else if (this.formatType === 'nfe') {
+		}
+		else if (this.formatType === 'nmmegadex') {
+			table = table['nmmegadex'];
+		}
+		else if (this.formatType === 'nmmegaz') {
+			table = table['nmmegaz'];
+		}
+		 else if (this.formatType === 'nfe') {
 			table = table['gen' + dex.gen + 'nfe'];
 		} else if (this.formatType?.startsWith('dlc1')) {
 			if (this.formatType.includes('doubles')) {
@@ -924,7 +928,6 @@ class BattlePokemonSearch extends BattleTypedSearch<'pokemon'> {
 		} else if (this.formatType === 'stadium') {
 			table = table['gen' + dex.gen + 'stadium' + (dex.gen > 1 ? dex.gen : '')];
 		}
-
 		if (!table.tierSet) {
 			table.tierSet = table.tiers.map((r: any) => {
 				if (typeof r === 'string') return ['pokemon', r];
@@ -933,7 +936,6 @@ class BattlePokemonSearch extends BattleTypedSearch<'pokemon'> {
 			table.tiers = null;
 		}
 		let tierSet: SearchRow[] = table.tierSet;
-		//console.log(table.tierSet);
 		let slices: {[k: string]: number} = table.formatSlices;
 		if (format === 'ubers' || format === 'uber') tierSet = tierSet.slice(slices.Uber);
 		else if (isVGCOrBS) {
@@ -956,8 +958,16 @@ class BattlePokemonSearch extends BattleTypedSearch<'pokemon'> {
 		else if(format==='lcuu')tierSet=tierSet.slice(slices['LC UU']);
 		else if(format==='cap')tierSet=tierSet.slice(0,slices.Uber).concat(tierSet.slice(slices.OU));
 		else if(format==='caplc')tierSet=tierSet.slice(slices['CAP LC'],slices.Uber).concat(tierSet.slice(slices.LC));
+		else if(format==='megazubers')tierSet=tierSet.slice(slices.Uber);
 		else if(format==='megazou')tierSet=tierSet.slice(slices['OU']);
+		else if(format==='megazuu')tierSet=tierSet.slice(slices['UU']);
+		else if(format==='megazru')tierSet=tierSet.slice(slices['RU']);
+		else if(format==='megaznu')tierSet=tierSet.slice(slices['NU']);
+		else if(format==='megazpu')tierSet=tierSet.slice(slices['PU']);
 		else if(format==='megazzu')tierSet=tierSet.slice(slices['ZU']);
+		else if(format==='megaag')tierSet=tierSet.slice(slices.AG);
+		else if(format==='megaou')tierSet=tierSet.slice(slices['OU']);
+		else if(format==='megauu')tierSet=tierSet.slice(slices['UU']);
 
 		else if (format === 'anythinggoes' || format.endsWith('ag') || format.startsWith('ag')) {
 			tierSet = tierSet.slice(slices.AG);
