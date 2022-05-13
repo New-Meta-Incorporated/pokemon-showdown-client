@@ -670,8 +670,12 @@ abstract class BattleTypedSearch<T extends SearchType> {
 
 			for (const id in this.getTable()) {
 				if (!(id in legalityFilter)) {
-					this.baseIllegalResults.push([this.searchType, id as ID]);
-					this.illegalReasons[id] = 'Illegal';
+					const nmMegazLegality = this.formatType === 'nmmegaz' && ( Dex.items.get(id).megaStone || Dex.items.get(id).zMove );
+					const nmMegaDex = this.formatType === 'nmmegadex' && Dex.items.get(id).megaStone;
+					if ( !nmMegazLegality && !nmMegaDex ) {
+						this.baseIllegalResults.push([this.searchType, id as ID]);
+						this.illegalReasons[id] = 'Illegal';
+					}
 				}
 			}
 		}
