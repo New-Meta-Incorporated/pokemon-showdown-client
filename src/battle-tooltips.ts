@@ -1827,7 +1827,7 @@ class BattleTooltips {
 		if (move.flags['sound']) {
 			value.abilityModify(1.3, "Punk Rock");
 		}
-		if (moveType === 'Steel' || moveType === 'Cosmic') {
+		if (moveType === 'Poison' || moveType === 'Cosmic') {
 			value.abilityModify(1.2, "Radioactive");
 		}
 		if (move.flags['sound']) {
