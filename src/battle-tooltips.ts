@@ -494,6 +494,8 @@ class BattleTooltips {
 		Flying: "Supersonic Skystrike",
 		Ground: "Tectonic Rage",
 		Fairy: "Twinkle Tackle",
+		Cosmic: "Astral Apocalypse",
+		Light: "Kaleidoscope Cannon",
 		"???": "",
 	};
 
