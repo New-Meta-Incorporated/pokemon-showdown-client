@@ -35203,3 +35203,4 @@ BattleMoveAnims['dreamwrecker']={anim:BattleMoveAnims['dreameater'].anim};
 BattleMoveAnims['aquaticgift']={anim:BattleMoveAnims['flipturn'].anim};
 BattleMoveAnims['beaconbarrage']={anim:BattleMoveAnims['photondischarge'].anim};
 BattleMoveAnims['misdirect']={anim:BattleMoveAnims['psychic'].anim};
+BattleMoveAnims['aviansong']={anim: BattleMoveAnims['hypervoice'].anim};
