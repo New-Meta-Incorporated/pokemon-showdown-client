@@ -2849,6 +2849,10 @@ const BattleEffects: {[k: string]: SpriteData} = {
 		url: 'mudwisp.png',
 		w: 100, h: 100,
 	},
+	metallicwisp: {
+		url: 'metallicwisp.png',
+		w: 100, h: 100,
+	},
 	blackwisp: {
 		url: 'blackwisp.png',
 		w: 100, h: 100,
