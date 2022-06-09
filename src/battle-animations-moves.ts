@@ -34779,29 +34779,29 @@ export const BattleMoveAnims: AnimTable = {
 				z: attacker.z,
 				opacity: 0,
 			}, 'accel');
-			scene.showEffect('shadowball', {
+			scene.showEffect('wisp', {
 				x: attacker.x,
 				y: attacker.y,
 				z: attacker.z,
 				scale: 2,
 				opacity: 0.1,
-				time: 100,
+				time: 150,
 			}, {
 				scale: 0,
 				opacity: 0.5,
-				time: 400,
+				time: 450,
 			}, 'linear');
-			scene.showEffect('shadowball', {
+			scene.showEffect('wisp', {
 				x: attacker.x,
 				y: attacker.y,
 				z: attacker.z,
 				scale: 2,
 				opacity: 0.1,
-				time: 300,
+				time: 350,
 			}, {
 				scale: 0,
 				opacity: 0.5,
-				time: 700,
+				time: 750,
 			}, 'linear');
 		},
 	},
@@ -34833,7 +34833,7 @@ export const BattleMoveAnims: AnimTable = {
 			}
 			const defender = defenders[1] || defenders[0];
 
-			scene.showEffect('wisp', {
+			scene.showEffect('metallicwisp', {
 				x: attacker.x,
 				y: attacker.y - 25,
 				z: attacker.z,
@@ -34846,7 +34846,7 @@ export const BattleMoveAnims: AnimTable = {
 				scale: 1,
 				opacity: 0.6,
 			}, 'decel', 'explode');
-			scene.showEffect('wisp', {
+			scene.showEffect('metallicwisp', {
 				x: attacker.x - 30,
 				y: attacker.y - 25,
 				z: attacker.z,
@@ -34859,7 +34859,7 @@ export const BattleMoveAnims: AnimTable = {
 				scale: 1,
 				opacity: 0.6,
 			}, 'decel', 'explode');
-			scene.showEffect('wisp', {
+			scene.showEffect('metallicwisp', {
 				x: attacker.x + 30,
 				y: attacker.y - 25,
 				z: attacker.z,
