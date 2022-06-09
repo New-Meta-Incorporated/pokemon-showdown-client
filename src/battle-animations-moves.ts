@@ -34833,7 +34833,7 @@ export const BattleMoveAnims: AnimTable = {
 			}
 			const defender = defenders[1] || defenders[0];
 
-			scene.showEffect('metallicwisp', {
+			scene.showEffect('wisp', {
 				x: attacker.x,
 				y: attacker.y - 25,
 				z: attacker.z,
@@ -34846,7 +34846,7 @@ export const BattleMoveAnims: AnimTable = {
 				scale: 1,
 				opacity: 0.6,
 			}, 'decel', 'explode');
-			scene.showEffect('metallicwisp', {
+			scene.showEffect('wisp', {
 				x: attacker.x - 30,
 				y: attacker.y - 25,
 				z: attacker.z,
@@ -34859,7 +34859,7 @@ export const BattleMoveAnims: AnimTable = {
 				scale: 1,
 				opacity: 0.6,
 			}, 'decel', 'explode');
-			scene.showEffect('metallicwisp', {
+			scene.showEffect('wisp', {
 				x: attacker.x + 30,
 				y: attacker.y - 25,
 				z: attacker.z,
