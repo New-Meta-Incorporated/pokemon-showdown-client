@@ -34803,8 +34803,7 @@ export const BattleMoveAnims: AnimTable = {
 				opacity: 0.5,
 				time: 750,
 			}, 'linear');
-		},
-	},
+	}},
 	mercurywave: {
 		anim(scene, [attacker, ...defenders]) {
 			for (const defender of defenders) {
@@ -34872,8 +34871,7 @@ export const BattleMoveAnims: AnimTable = {
 				scale: 1,
 				opacity: 0.6,
 			}, 'decel', 'explode');
-		},
-	},
+	}}
 
 };
 
