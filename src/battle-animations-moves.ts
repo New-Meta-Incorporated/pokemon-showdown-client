@@ -34783,25 +34783,25 @@ export const BattleMoveAnims: AnimTable = {
 				x: attacker.x,
 				y: attacker.y,
 				z: attacker.z,
-				scale: 2,
-				opacity: 0.1,
-				time: 250,
-			}, {
 				scale: 0.5,
-				opacity: 0,
-				time: 550,
+				opacity: 0.1,
+				time: 400,
+			}, {
+				scale: 2,
+				opacity: 0.5,
+				time: 600,
 			}, 'linear');
 			scene.showEffect('wisp', {
 				x: attacker.x,
 				y: attacker.y,
 				z: attacker.z,
-				scale: 0.5,
-				opacity: 0,
-				time: 550,
-			}, {
 				scale: 2,
+				opacity: 0.5,
+				time: 600,
+			}, {
+				scale: 0.5,
 				opacity: 0.1,
-				time: 850,
+				time: 800,
 			}, 'linear');
 	}},
 	mercurywave: {
