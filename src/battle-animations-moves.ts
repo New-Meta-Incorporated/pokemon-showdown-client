@@ -34765,6 +34765,115 @@ export const BattleMoveAnims: AnimTable = {
 		time:100});
 		
 	}},
+	enlightenment:{
+		anim(scene, [attacker]) {
+			scene.showEffect('wisp', {
+				x: attacker.x,
+				y: attacker.y + 130,
+				z: attacker.z,
+				scale: 1,
+				opacity: 1,
+			}, {
+				x: attacker.x,
+				y: attacker.y,
+				z: attacker.z,
+				opacity: 0,
+			}, 'accel');
+			scene.showEffect('shadowball', {
+				x: attacker.x,
+				y: attacker.y,
+				z: attacker.z,
+				scale: 2,
+				opacity: 0.1,
+				time: 100,
+			}, {
+				scale: 0,
+				opacity: 0.5,
+				time: 400,
+			}, 'linear');
+			scene.showEffect('shadowball', {
+				x: attacker.x,
+				y: attacker.y,
+				z: attacker.z,
+				scale: 2,
+				opacity: 0.1,
+				time: 300,
+			}, {
+				scale: 0,
+				opacity: 0.5,
+				time: 700,
+			}, 'linear');
+		},
+	},
+	mercurywave: {
+		anim(scene, [attacker, ...defenders]) {
+			for (const defender of defenders) {
+				defender.delay(125);
+				defender.anim({
+					z: defender.behind(5),
+					time: 75,
+				}, 'swing');
+				defender.anim({
+					time: 75,
+				}, 'swing');
+				defender.anim({
+					z: defender.behind(5),
+					time: 75,
+				}, 'swing');
+				defender.anim({
+					time: 75,
+				}, 'swing');
+				defender.anim({
+					z: defender.behind(5),
+					time: 75,
+				}, 'swing');
+				defender.anim({
+					time: 75,
+				}, 'swing');
+			}
+			const defender = defenders[1] || defenders[0];
+
+			scene.showEffect('metallicwisp', {
+				x: attacker.x,
+				y: attacker.y - 25,
+				z: attacker.z,
+				scale: 0.4,
+				opacity: 0.3,
+			}, {
+				x: defender.x,
+				y: defender.y + 10,
+				z: defender.behind(50),
+				scale: 1,
+				opacity: 0.6,
+			}, 'decel', 'explode');
+			scene.showEffect('metallicwisp', {
+				x: attacker.x - 30,
+				y: attacker.y - 25,
+				z: attacker.z,
+				scale: 0.4,
+				opacity: 0.3,
+			}, {
+				x: defender.x - 60,
+				y: defender.y,
+				z: defender.behind(50),
+				scale: 1,
+				opacity: 0.6,
+			}, 'decel', 'explode');
+			scene.showEffect('metallicwisp', {
+				x: attacker.x + 30,
+				y: attacker.y - 25,
+				z: attacker.z,
+				scale: 0.4,
+				opacity: 0.3,
+			}, {
+				x: defender.x + 60,
+				y: defender.y,
+				z: defender.behind(50),
+				scale: 1,
+				opacity: 0.6,
+			}, 'decel', 'explode');
+		},
+	},
 
 };
 
