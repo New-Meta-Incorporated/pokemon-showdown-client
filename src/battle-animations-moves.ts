@@ -33976,65 +33976,6 @@ export const BattleMoveAnims: AnimTable = {
 		},
 		prepareAnim:BattleOtherAnims.chargestatus.anim
 	},
-	solarflare:{
-		anim:function(scene,_ref341){var attacker=_ref341[0],defender=_ref341[1];
-		scene.backgroundEffect('#4499FF',600,0.6);
-		scene.showEffect('lightball',{
-		x:attacker.x,
-		y:attacker.y,
-		z:attacker.z,
-		scale:0.6,
-		opacity:0.8},
-		{
-		x:defender.x+60,
-		y:defender.y+40,
-		z:defender.z,
-		scale:2,
-		opacity:0.5},
-		'decel','explode');
-		scene.showEffect('lightball',{
-		x:attacker.x,
-		y:attacker.y,
-		z:attacker.z,
-		scale:0.6,
-		opacity:0.8,
-		time:75},
-		{
-		x:defender.x+40,
-		y:defender.y-40,
-		z:defender.z,
-		scale:2,
-		opacity:0.5},
-		'decel','explode');
-		scene.showEffect('lightball',{
-		x:attacker.x,
-		y:attacker.y,
-		z:attacker.z,
-		scale:0.6,
-		opacity:0.8,
-		time:150},
-		{
-		x:defender.x-60,
-		y:defender.y,
-		z:defender.z,
-		scale:2,
-		opacity:0.5},
-		'decel','explode');
-		scene.showEffect('lightball',{
-		x:attacker.x,
-		y:attacker.y,
-		z:attacker.z,
-		scale:0.6,
-		opacity:0.8,
-		time:225},
-		{
-		x:defender.x-20,
-		y:defender.y+10,
-		z:defender.z,
-		scale:2,
-		opacity:0.5},
-		'decel','explode');
-	}},
 	harmonioussinging:{
 		anim:BattleOtherAnims.sound.anim
 	},
@@ -34960,6 +34901,94 @@ export const BattleMoveAnims: AnimTable = {
 			}, 'linear');
 		},
 	},
+	forestsvoice: {
+		anim(scene, [attacker, defender]) {
+			let xstep = (defender.x - attacker.x) / 5;
+			let ystep = (defender.y - attacker.y) / 5;
+			let zstep = (defender.z - attacker.z) / 5;
+
+			for (let i = 0; i < 4; i++) {
+				scene.showEffect('leaf1', {
+					x: attacker.x + xstep * (i + 1),
+					y: attacker.y + ystep * (i + 1),
+					z: attacker.z + zstep * (i + 1),
+					scale: 1.5,
+					opacity: 0.6,
+					time: 40 * i,
+				}, {
+					opacity: 0,
+					time: 40 * i + 600,
+				}, 'linear');
+			}
+			scene.showEffect('energyball', {
+				x: defender.x,
+				y: defender.y,
+				z: defender.z,
+				scale: 0,
+				opacity: 1,
+				time: 100,
+			}, {
+				x: defender.x,
+				y: defender.y,
+				z: defender.z,
+				scale: 2,
+				opacity: 0,
+				time: 400,
+			}, 'linear');
+			scene.showEffect('energyball', {
+				x: defender.x,
+				y: defender.y,
+				z: defender.z,
+				scale: 0,
+				opacity: 1,
+				time: 300,
+			}, {
+				x: defender.x,
+				y: defender.y,
+				z: defender.z,
+				scale: 2,
+				opacity: 0,
+				time: 600,
+			}, 'linear');
+
+			scene.showEffect('wisp', {
+				x: defender.x - 30,
+				y: defender.y,
+				z: defender.z,
+				scale: 2,
+				opacity: 0.5,
+				time: 200,
+			}, {
+				scale: 4,
+				opacity: 0,
+				time: 600,
+			}, 'linear', 'fade');
+			scene.showEffect('wisp', {
+				x: defender.x,
+				y: defender.y - 30,
+				z: defender.z,
+				scale: 2,
+				opacity: 0.5,
+				time: 300,
+			}, {
+				scale: 4,
+				opacity: 0,
+				time: 650,
+			}, 'linear', 'fade');
+			scene.showEffect('wisp', {
+				x: defender.x + 15,
+				y: defender.y,
+				z: defender.z,
+				scale: 2,
+				opacity: 0.5,
+				time: 400,
+			}, {
+				scale: 4,
+				opacity: 0,
+				time: 700,
+			}, 'linear', 'fade');
+		},
+	}
 
 };
 
@@ -35400,3 +35429,4 @@ BattleMoveAnims['beaconbarrage']={anim:BattleMoveAnims['photondischarge'].anim};
 BattleMoveAnims['misdirect']={anim:BattleMoveAnims['psychic'].anim};
 BattleMoveAnims['aviansong']={anim: BattleMoveAnims['hypervoice'].anim};
 BattleMoveAnims['wildernesswack']={anim: BattleMoveAnims['petalblizzard'].anim};
+BattleMoveAnims['solarflare']={anim: BattleMoveAnims['photondischarge'].anim};
