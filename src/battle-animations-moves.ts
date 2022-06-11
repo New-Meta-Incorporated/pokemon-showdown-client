@@ -32529,75 +32529,6 @@ export const BattleMoveAnims: AnimTable = {
 		BattleOtherAnims.bite.anim(scene,[attacker,defender]);
 		BattleOtherAnims.contactattack.anim(scene,[attacker,defender]);
 	}},
-	sunhammer:{
-		anim:function(scene,_ref173){var attacker=_ref173[0],defender=_ref173[1];
-		scene.backgroundEffect('#000000',700,0.2);
-		scene.showEffect('lightball',{
-		x:defender.x,
-		y:defender.y,
-		z:defender.z,
-		scale:0,
-		opacity:0.4,
-		time:300},
-		{
-		scale:4,
-		opacity:0,
-		time:600},
-		'linear');
-		scene.showEffect('lightball',{
-		x:defender.x,
-		y:defender.y,
-		z:defender.z,
-		scale:0,
-		opacity:0.4,
-		time:500},
-		{
-		scale:4,
-		opacity:0,
-		time:800},
-		'linear');
-		scene.showEffect(attacker.sp,{
-		x:attacker.x,
-		y:attacker.y,
-		z:attacker.z,
-		opacity:0.3,
-		time:50},
-		{
-		x:defender.x,
-		y:defender.y,
-		z:defender.behind(-5),
-		time:350},
-		'accel','fade');
-		scene.showEffect(attacker.sp,{
-		x:attacker.x,
-		y:attacker.y,
-		z:attacker.z,
-		opacity:0.3,
-		time:100},
-		{
-		x:defender.x,
-		y:defender.y,
-		z:defender.behind(-5),
-		time:400},
-		'accel','fade');
-		attacker.anim({
-		x:defender.x,
-		y:defender.y,
-		z:defender.behind(-5),
-		time:300},
-		'accel');
-		attacker.anim({
-		time:500},
-		'ballistic2Back');
-		defender.delay(280);
-		defender.anim({
-		z:defender.behind(20),
-		time:100},
-		'swing');
-		defender.anim({
-		time:300},
-		'swing');
-	}},
 	frostburn:{
 		anim:function(scene,_ref174){var attacker=_ref174[0],defender=_ref174[1];
 		scene.backgroundEffect('#000000',700,0.2);
@@ -32871,67 +32802,6 @@ export const BattleMoveAnims: AnimTable = {
 		anim:function(scene,_ref210){var attacker=_ref210[0],defender=_ref210[1];
 		scene.backgroundEffect("url('https://"+Config.routes.client+"/fx/weather-sunnyday.jpg')",900,0.5);
 		BattleOtherAnims.sound.anim(scene,[attacker,defender]);
-	}},
-	symphonicflare:{
-		anim:function(scene,_ref211){var attacker=_ref211[0],defender=_ref211[1];
-		scene.backgroundEffect('#4499FF',600,0.6);
-		BattleOtherAnims.sound.anim(scene,[attacker,defender]);
-		scene.backgroundEffect('#4499FF',600,0.6);
-		scene.showEffect('lightball',{
-		x:attacker.x,
-		y:attacker.y,
-		z:attacker.z,
-		scale:0.6,
-		opacity:0.8},
-		{
-		x:defender.x+60,
-		y:defender.y+40,
-		z:defender.z,
-		scale:2,
-		opacity:0.5},
-		'decel','explode');
-		scene.showEffect('lightball',{
-		x:attacker.x,
-		y:attacker.y,
-		z:attacker.z,
-		scale:0.6,
-		opacity:0.8,
-		time:75},
-		{
-		x:defender.x+40,
-		y:defender.y-40,
-		z:defender.z,
-		scale:2,
-		opacity:0.5},
-		'decel','explode');
-		scene.showEffect('lightball',{
-		x:attacker.x,
-		y:attacker.y,
-		z:attacker.z,
-		scale:0.6,
-		opacity:0.8,
-		time:150},
-		{
-		x:defender.x-60,
-		y:defender.y,
-		z:defender.z,
-		scale:2,
-		opacity:0.5},
-		'decel','explode');
-		scene.showEffect('lightball',{
-		x:attacker.x,
-		y:attacker.y,
-		z:attacker.z,
-		scale:0.6,
-		opacity:0.8,
-		time:225},
-		{
-		x:defender.x-20,
-		y:defender.y+10,
-		z:defender.z,
-		scale:2,
-		opacity:0.5},
-		'decel','explode');
 	}},
 	blazingtail:{
 		anim:function(scene,_ref233){var attacker=_ref233[0],defender=_ref233[1];
@@ -34832,6 +34702,7 @@ export const BattleMoveAnims: AnimTable = {
 			}
 			const defender = defenders[1] || defenders[0];
 
+			scene.backgroundEffect('#686868', 700, 0.4);
 			scene.showEffect('metallicwisp', {
 				x: attacker.x,
 				y: attacker.y - 25,
@@ -34871,7 +34742,224 @@ export const BattleMoveAnims: AnimTable = {
 				scale: 1,
 				opacity: 0.6,
 			}, 'decel', 'explode');
-	}}
+	}},
+	animablast: {
+		anim(scene, [attacker, defender]) {
+			scene.showEffect('metallicwisp', {
+				x: attacker.x,
+				y: attacker.y,
+				z: attacker.behind(-30),
+				scale: 3,
+				opacity: 0.3,
+			}, {
+				scale: 0.6,
+				opacity: 1,
+				time: 300,
+			}, 'decel', 'fade');
+			scene.showEffect('metallicwisp', {
+				x: attacker.x,
+				y: attacker.y,
+				z: attacker.behind(-30),
+				scale: 3,
+				opacity: 0.3,
+				time: 100,
+			}, {
+				scale: 0.8,
+				opacity: 0.6,
+				time: 400,
+			}, 'decel', 'fade');
+			scene.showEffect('metallicwisp', {
+				x: attacker.x,
+				y: attacker.y,
+				z: attacker.behind(-30),
+				scale: 0.6,
+				opacity: 0.8,
+				time: 400,
+			}, {
+				x: defender.x,
+				y: defender.y,
+				z: defender.behind(20),
+				scale: 1,
+				opacity: 0.8,
+				time: 800,
+			}, 'accel', 'explode');
+
+			defender.delay(800);
+			defender.anim({
+				z: defender.behind(10),
+				time: 200,
+			}, 'swing');
+			defender.anim({
+				time: 300,
+			}, 'swing');
+		},
+	},
+	sunhammer: {
+		anim(scene, [attacker, defender]) {
+			let xstep = (defender.x - attacker.x) / 5;
+			let ystep = (defender.x - 200 - attacker.x) / 5;
+			let zstep = (defender.z - attacker.z) / 5;
+
+			scene.backgroundEffect('linear-gradient(#969205 30%, #B4B836)', 500, 0.6);
+			scene.backgroundEffect('linear-gradient(#FFFFFF 30%, #B4B836)', 1200, 0.6, 500);
+
+			scene.showEffect('wisp', {
+				x: attacker.x,
+				y: attacker.y + 200,
+				z: attacker.z,
+				scale: 2.5,
+				opacity: 1,
+				time: 500,
+			}, {
+				scale: 3,
+				opacity: 0,
+				time: 1200,
+			}, 'decel');
+			for (let i = 0; i < 5; i++) {
+				scene.showEffect('wisp', {
+					x: attacker.x + xstep * (i + 1),
+					y: (attacker.y + 200) + ystep * (i + 1),
+					z: attacker.z + zstep * (i + 1),
+					scale: 2,
+					opacity: 0.4,
+					time: 40 * i + 700,
+				}, {
+					scale: 1.5,
+					opacity: 0,
+					time: 60 * i + 1500,
+				}, 'linear');
+			}
+			scene.showEffect('wisp', {
+				x: defender.x,
+				y: defender.y - 50,
+				z: defender.z,
+				scale: 1,
+				xscale: 3,
+				opacity: 0.5,
+				time: 1075,
+			}, {
+				scale: 3,
+				xscale: 8,
+				opacity: 0.1,
+				time: 1675,
+			}, 'linear', 'fade');
+			scene.showEffect('wisp', {
+				x: defender.x,
+				y: defender.y,
+				z: defender.behind(5),
+				scale: 0,
+				opacity: 1,
+				time: 1075,
+			}, {
+				scale: 8,
+				opacity: 0,
+				time: 1375,
+			}, 'linear');
+			scene.showEffect('wisp', {
+				x: defender.x,
+				y: defender.y,
+				z: defender.behind(10),
+				scale: 0,
+				opacity: 1,
+				time: 1175,
+			}, {
+				scale: 8,
+				opacity: 0,
+				time: 1575,
+			}, 'linear');
+
+			attacker.anim({
+				y: defender.y + 120,
+				opacity: 0,
+				time: 300,
+			}, 'accel');
+			attacker.delay(425);
+			attacker.anim({
+				y: defender.y + 200,
+				opacity: 1,
+				time: 1,
+			}, 'accel');
+			attacker.anim({
+				x: defender.x,
+				y: defender.y,
+				z: defender.z,
+				opacity: 1,
+				scale: 1,
+				time: 350,
+			}, 'accel');
+			attacker.anim({
+				x: defender.leftof(50),
+				y: defender.y - 20,
+				z: defender.z,
+				opacity: 0,
+				time: 75,
+			});
+			attacker.delay(300);
+			attacker.anim({
+				x: attacker.x,
+				y: attacker.y + 40,
+				z: attacker.behind(40),
+				time: 1,
+			});
+			attacker.anim({
+				x: attacker.x,
+				y: attacker.y,
+				z: attacker.z,
+				time: 250,
+			}, 'decel');
+			defender.delay(1075);
+			defender.anim({
+				z: defender.behind(30),
+				time: 400,
+			}, 'decel');
+			defender.anim({
+				time: 300,
+			}, 'swing');
+		},
+	},
+	symphonicflare: {
+		anim(scene, [attacker]) {
+			scene.showEffect('flareball', {
+				x: attacker.x,
+				y: attacker.y,
+				z: attacker.z,
+				scale: 0,
+				opacity: 0.5,
+				time: 0,
+			}, {
+				z: attacker.behind(-50),
+				scale: 7,
+				opacity: 0,
+				time: 400,
+			}, 'linear');
+			scene.showEffect('flareball', {
+				x: attacker.x,
+				y: attacker.y,
+				z: attacker.z,
+				scale: 0,
+				opacity: 0.5,
+				time: 150,
+			}, {
+				z: attacker.behind(-50),
+				scale: 7,
+				opacity: 0,
+				time: 600,
+			}, 'linear');
+			scene.showEffect('flareball', {
+				x: attacker.x,
+				y: attacker.y,
+				z: attacker.z,
+				scale: 0,
+				opacity: 0.5,
+				time: 300,
+			}, {
+				z: attacker.behind(-50),
+				scale: 7,
+				opacity: 0,
+				time: 800,
+			}, 'linear');
+		},
+	},
 
 };
 
@@ -35311,3 +35399,4 @@ BattleMoveAnims['aquaticgift']={anim:BattleMoveAnims['flipturn'].anim};
 BattleMoveAnims['beaconbarrage']={anim:BattleMoveAnims['photondischarge'].anim};
 BattleMoveAnims['misdirect']={anim:BattleMoveAnims['psychic'].anim};
 BattleMoveAnims['aviansong']={anim: BattleMoveAnims['hypervoice'].anim};
+BattleMoveAnims['wildernesswack']={anim: BattleMoveAnims['petalblizzard'].anim};
