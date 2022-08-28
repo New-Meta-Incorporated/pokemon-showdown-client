@@ -1109,6 +1109,9 @@ class BattleTooltips {
 		if (ability === 'purepower' || ability === 'hugepower') {
 			stats.atk *= 2;
 		}
+    if (ability === 'wisepower') {
+			stats.spa *= 2;
+		}
 		if (ability === 'hustle' || (ability === 'gorillatactics' && !clientPokemon?.volatiles['dynamax'])) {
 			stats.atk = Math.floor(stats.atk * 1.5);
 		}
@@ -2810,4 +2813,9 @@ class BattleStatGuesser {
 if (typeof require === 'function') {
 	// in Node
 	(global as any).BattleStatGuesser = BattleStatGuesser;
+}
+if (item === 'mysticpropeller') {
+  if (speciesName === 'Draconaut') {
+    stats.spe *= 1.5;
+  }
 }
