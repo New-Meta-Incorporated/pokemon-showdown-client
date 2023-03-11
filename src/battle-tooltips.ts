@@ -2814,8 +2814,3 @@ if (typeof require === 'function') {
 	// in Node
 	(global as any).BattleStatGuesser = BattleStatGuesser;
 }
-if (item === 'mysticpropeller') {
-  if (speciesName === 'Draconaut') {
-    stats.spe *= 1.5;
-  }
-}
