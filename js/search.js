@@ -230,6 +230,7 @@
 			var tierTable = {
 				uber: "Uber",
 				ou: "OU",
+        cu: "CU",
 				uu: "UU",
 				ru: "RU",
 				nu: "NU",
@@ -243,11 +244,12 @@
 				cap: "CAP",
 				caplc: "CAP LC",
 				capnfe: "CAP NFE",
+        cubl: "CUBL",
 				uubl: "UUBL",
 				rubl: "RUBL",
 				nubl: "NUBL",
 				publ: "PUBL",
-        		zubl: "ZUBL"
+        zubl: "ZUBL"
 			};
 			var tier = {name: tierTable[id]};
 			return this.renderTierRow(tier, matchStart, matchLength, errorMessage);

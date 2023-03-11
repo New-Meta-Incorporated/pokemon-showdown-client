@@ -27,6 +27,15 @@
 				if (this.curTeam.format.includes('bdsp')) {
 					this.curTeam.dex = Dex.mod('gen8bdsp');
 				}
+				if (this.curTeam.format.includes('newmeta')) {
+					this.curTeam.dex = Dex.mod('gen8newmeta');
+				}
+				if (this.curTeam.format.includes('nmclassic')) {
+					this.curTeam.dex = Dex.mod('gen8nmclassic');
+				}
+				if (this.curTeam.format.includes('nmonly')) {
+					this.curTeam.dex = Dex.mod('gen8nmonly');
+				}
 				Storage.activeSetList = this.curSetList;
 			}
 		},
@@ -694,6 +703,15 @@
 			if (this.curTeam.format.includes('bdsp')) {
 				this.curTeam.dex = Dex.mod('gen8bdsp');
 			}
+			if (this.curTeam.format.includes('newmeta')) {
+				this.curTeam.dex = Dex.mod('gen8newmeta');
+			}
+			if (this.curTeam.format.includes('nmclassic')) {
+				this.curTeam.dex = Dex.mod('gen8nmclassic');
+			}
+			if (this.curTeam.format.includes('nmonly')) {
+				this.curTeam.dex = Dex.mod('gen8nmonly');
+			}
 			Storage.activeSetList = this.curSetList = Storage.unpackTeam(this.curTeam.team);
 			this.curTeamIndex = i;
 			this.update();
@@ -1168,6 +1186,9 @@
 			var species = this.curTeam.dex.species.get(set.species);
 			var isLetsGo = this.curTeam.format.includes('letsgo');
 			var isBDSP = this.curTeam.format.includes('bdsp');
+			var isNewMeta = this.curTeam.format.includes('newmeta');
+			var isNMClassic = this.curTeam.format.includes('nmclassic');
+			var isNMOnly = this.curTeam.format.includes('nmonly');
 			var isNatDex = this.curTeam.format.includes('nationaldex');
 			var buf = '<li value="' + i + '">';
 			if (!set.species) {
@@ -1473,6 +1494,15 @@
 			}
 			if (this.curTeam.format.includes('bdsp')) {
 				this.curTeam.dex = Dex.mod('gen8bdsp');
+			}
+			if (this.curTeam.format.includes('newmeta')) {
+				this.curTeam.dex = Dex.mod('gen8newmeta');
+			}
+			if (this.curTeam.format.includes('nmclassic')) {
+				this.curTeam.dex = Dex.mod('gen8nmclassic');
+			}
+			if (this.curTeam.format.includes('nmonly')) {
+				this.curTeam.dex = Dex.mod('gen8nmonly');
 			}
 			this.save();
 			if (this.curTeam.gen === 5 && !Dex.loadedSpriteData['bw']) Dex.loadSpriteData('bw');
@@ -2589,6 +2619,9 @@
 			var set = this.curSet;
 			var isLetsGo = this.curTeam.format.includes('letsgo');
 			var isBDSP = this.curTeam.format.includes('bdsp');
+			var isNewMeta = this.curTeam.format.includes('newmeta');
+			var isNMClassic = this.curTeam.format.includes('nmclassic');
+			var isNMOnly = this.curTeam.format.includes('nmonly');
 			var isNatDex = this.curTeam.gen === 8 && this.curTeam.format.includes('nationaldex');
 			var species = this.curTeam.dex.species.get(set.species);
 			if (!set) return;
@@ -2673,6 +2706,9 @@
 			var species = this.curTeam.dex.species.get(set.species);
 			var isLetsGo = this.curTeam.format.includes('letsgo');
 			var isBDSP = this.curTeam.format.includes('bdsp');
+			var isNewMeta = this.curTeam.format.includes('newmeta');
+			var isNMClassic = this.curTeam.format.includes('nmclassic');
+			var isNMOnly = this.curTeam.format.includes('nmonly');
 			var isNatDex = this.curTeam.format.includes('nationaldex');
 
 			// level
@@ -2994,6 +3030,9 @@
 				var baseFormat = this.curTeam.format;
 				if (baseFormat.substr(0, 3) === 'gen') baseFormat = baseFormat.substr(4);
 				if (baseFormat.substr(0, 4) === 'bdsp') baseFormat = baseFormat.substr(4);
+				if (baseFormat.substr(0, 5) === 'newmeta') baseFormat = baseFormat.substr(4);
+				if (baseFormat.substr(0, 6) === 'nmclassic') baseFormat = baseFormat.substr(4);
+				if (baseFormat.substr(0, 7) === 'nmonly') baseFormat = baseFormat.substr(4);
 				if (baseFormat.substr(0, 8) === 'pokebank') baseFormat = baseFormat.substr(8);
 				if (this.curTeam && this.curTeam.format) {
 					if (baseFormat === 'battlespotsingles' || baseFormat === 'battlespotdoubles' || baseFormat.substr(0, 3) === 'vgc' ||
@@ -3207,6 +3246,9 @@
 				var format = window.BattleFormats && window.BattleFormats[baseFormat];
 				if (baseFormat.substr(0, 3) === 'gen') baseFormat = baseFormat.substr(4);
 				if (baseFormat.substr(0, 4) === 'bdsp') baseFormat = baseFormat.substr(4);
+				if (baseFormat.substr(0, 5) === 'newmeta') baseFormat = baseFormat.substr(4);
+				if (baseFormat.substr(0, 6) === 'nmclassic') baseFormat = baseFormat.substr(4);
+				if (baseFormat.substr(0, 7) === 'nmonly') baseFormat = baseFormat.substr(4);
 				if (baseFormat.substr(0, 8) === 'pokebank') baseFormat = baseFormat.substr(8);
 				if (this.curTeam && this.curTeam.format) {
 					if (baseFormat.substr(0, 10) === 'battlespot' && baseFormat.substr(0, 19) !== 'battlespotspecial13' ||

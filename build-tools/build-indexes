@@ -55,7 +55,7 @@ function requireNoCache(pathSpec) {
 	index = index.concat(['physical', 'special', 'status'].map(x => toID(x) + ' category'));
 	index = index.concat(['monster', 'water1', 'bug', 'flying', 'field', 'fairy', 'grass', 'humanlike', 'water3', 'mineral', 'amorphous', 'water2', 'ditto', 'dragon', 'undiscovered'].map(x => toID(x) + ' egggroup'));
 	//index = index.concat(['ou', 'uu', 'ru', 'nu', 'pu', 'lc', 'nfe', 'uber', 'uubl', 'rubl', 'nubl', 'publ', 'cap', 'caplc', 'capnfe'].map(x => toID(x) + ' tier'));
-	index = index.concat(['ou', 'uu', 'ru', 'nu', 'pu', 'zu', 'lcuber', 'lcou', 'lcuu', 'nfe', 'uber', 'uubl', 'rubl', 'nubl', 'publ', 'cap', 'caplc', 'capnfe'].map(x => toID(x) + ' tier'));
+	index = index.concat(['ou', 'cu', 'uu', 'ru', 'nu', 'pu', 'zu', 'lcuber', 'lcou', 'lcuu', 'nfe', 'uber', 'cubl', 'uubl', 'rubl', 'nubl', 'publ', 'zubl', 'cap', 'caplc', 'capnfe'].map(x => toID(x) + ' tier'));
 
 	let BattleArticleTitles = {};
 
@@ -322,13 +322,16 @@ process.stdout.write("Building `data/teambuilder-tables.js`... ");
 	const VGC = GENS.filter(x => x > 3).map(num => -num - 0.5);
 	const NFE = GENS.map(num => num + 0.3);
 	const STADIUM = [2.04, 1.04];
-	const OTHER = [8.6, 8.4, 8.2, 8.1, -8.4, -8.6, 7.1];
+	const OTHER = [8.13, 8.12, 8.11, 8.6, 8.4, 8.2, 8.1, -8.4, -8.6, -8.11, -8.12, -8.13, 7.1];
 	const NMMEGAZ = [8.7];
 	const NMMEGADEX = [8.8];
 
 	// process.stdout.write("\n  ");
 	for (const genIdent of [...GENS, ...DOUBLES, ...VGC, ...NFE, ...STADIUM, ...OTHER, ...NMMEGAZ, ...NMMEGADEX]) {
 		const isLetsGo = (genIdent === 7.1);
+		const isNewMeta = (genIdent === 8.11 || genIdent === -8.11);
+		const isNMClassic = (genIdent === 8.12 || genIdent === -8.12);
+		const isNMOnly = (genIdent === 8.13 || genIdent === -8.13);
 		const isNMMEGAZ = (genIdent === 8.7);
 		const isNMMEGADEX = (genIdent === 8.8);
 		const isBDSP = (genIdent === 8.6 || genIdent === -8.6);
@@ -346,6 +349,9 @@ process.stdout.write("Building `data/teambuilder-tables.js`... ");
 			if (isLetsGo) genStr += 'letsgo';
 			if (isNMMEGAZ) genStr == 'nmmegaz';
 			if (isNMMEGADEX) genStr == 'nmmegadex';
+			if (isNewMeta) genStr += 'newmeta';
+			if (isNMClassic) genStr += 'nmclassic';
+			if (isNMOnly) genStr += 'nmonly';
 			if (isBDSP) genStr += 'bdsp';
 			if (isStadium) genStr += 'stadium' + (genNum > 1 ? genNum : '');
 			return genStr;
@@ -444,6 +450,21 @@ process.stdout.write("Building `data/teambuilder-tables.js`... ");
 					if (species.tier === 'LC') return 'LC';
 					return 'Regular';
 				}
+				if (isNewMeta) {
+						let tier = species.tier;
+						tier = Dex.mod('gen8newmeta').species.get(species.name).tier;
+						return tier;
+				}
+				if (isNMClassic) {
+						let tier = species.tier;
+						tier = Dex.mod('gen8nmclassic').species.get(species.name).tier;
+						return tier;
+				}
+				if (isNMOnly) {
+						let tier = species.tier;
+						tier = Dex.mod('gen8nmonly').species.get(species.name).tier;
+						return tier;
+				}
 				if (isNMMEGADEX) {
 					let tier = species.tier;
 					tier = Dex.mod('nmmegadex').species.get(species.name).tier;
@@ -534,7 +555,7 @@ process.stdout.write("Building `data/teambuilder-tables.js`... ");
 			BattleTeambuilderTable['gen7letsgo'].tiers = tiers;
 			BattleTeambuilderTable['gen7letsgo'].overrideTier = overrideTier;
 			BattleTeambuilderTable['gen7letsgo'].formatSlices = formatSlices;
-		} 
+		}
 		else if (isNMMEGAZ) {
 			BattleTeambuilderTable['nmmegaz'] = {};
 			BattleTeambuilderTable['nmmegaz'].learnsets = {};
@@ -557,6 +578,33 @@ process.stdout.write("Building `data/teambuilder-tables.js`... ");
 			BattleTeambuilderTable['gen8bdsp'].overrideTier = overrideTier;
 			BattleTeambuilderTable['gen8bdsp'].monotypeBans = monotypeBans;
 			BattleTeambuilderTable['gen8bdsp'].formatSlices = formatSlices;
+		}
+		else if (isNewMeta && !isDoubles) {
+			BattleTeambuilderTable['gen8newmeta'] = {};
+			BattleTeambuilderTable['gen8newmeta'].learnsets = {};
+			BattleTeambuilderTable['gen8newmeta'].tiers = tiers;
+			BattleTeambuilderTable['gen8newmeta'].items = items;
+			BattleTeambuilderTable['gen8newmeta'].overrideTier = overrideTier;
+			BattleTeambuilderTable['gen8newmeta'].monotypeBans = monotypeBans;
+			BattleTeambuilderTable['gen8newmeta'].formatSlices = formatSlices;
+		}
+		else if (isNMClassic && !isDoubles) {
+			BattleTeambuilderTable['gen8nmclassic'] = {};
+			BattleTeambuilderTable['gen8nmclassic'].learnsets = {};
+			BattleTeambuilderTable['gen8nmclassic'].tiers = tiers;
+			BattleTeambuilderTable['gen8nmclassic'].items = items;
+			BattleTeambuilderTable['gen8nmclassic'].overrideTier = overrideTier;
+			BattleTeambuilderTable['gen8nmclassic'].monotypeBans = monotypeBans;
+			BattleTeambuilderTable['gen8nmclassic'].formatSlices = formatSlices;
+		}
+		else if (isNMOnly && !isDoubles) {
+			BattleTeambuilderTable['gen8nmonly'] = {};
+			BattleTeambuilderTable['gen8nmonly'].learnsets = {};
+			BattleTeambuilderTable['gen8nmonly'].tiers = tiers;
+			BattleTeambuilderTable['gen8nmonly'].items = items;
+			BattleTeambuilderTable['gen8nmonly'].overrideTier = overrideTier;
+			BattleTeambuilderTable['gen8nmonly'].monotypeBans = monotypeBans;
+			BattleTeambuilderTable['gen8nmonly'].formatSlices = formatSlices;
 		} else if (isVGC) {
 			BattleTeambuilderTable[gen + 'vgc'] = {};
 			BattleTeambuilderTable[gen + 'vgc'].tiers = tiers;
@@ -605,6 +653,15 @@ process.stdout.write("Building `data/teambuilder-tables.js`... ");
 			if (isBDSP && !isDoubles) {
 				return ["CAP", "CAP NFE", "CAP LC", "Uber", "(Uber)", "OU", "UUBL", "UU", "RUBL", "RU", "NUBL", "NU", "NFE", "LC UBER", "LC OU", "LC UU", "Unreleased"];
 			}
+			if (isNewMeta && !isDoubles) {
+				return ["CAP", "CAP NFE", "CAP LC", "AG", "Uber", "(Uber)", "OU", "(OU)", "CUBL", "CU", "UUBL", "UU", "RUBL", "RU", "NUBL", "NU", "PUBL", "PU", "(PU)", "ZU", "(ZU)", "New", "NFE", "LC UBER", "LC OU", "LC UU", "Unreleased"];
+			}
+			if (isNMClassic && !isDoubles) {
+				return ["CAP", "CAP NFE", "CAP LC", "AG", "Uber", "(Uber)", "OU", "(OU)", "CUBL", "CU", "UUBL", "UU", "RUBL", "RU", "NUBL", "NU", "PUBL", "PU", "(PU)", "ZU", "(ZU)", "New", "NFE", "LC UBER", "LC OU", "LC UU", "Unreleased"];
+			}
+			if (isNMOnly && !isDoubles) {
+				return ["CAP", "CAP NFE", "CAP LC", "AG", "Uber", "(Uber)", "OU", "(OU)", "CUBL", "CU", "UUBL", "UU", "RUBL", "RU", "NUBL", "NU", "PUBL", "PU", "(PU)", "ZU", "(ZU)", "New", "NFE", "LC UBER", "LC OU", "LC UU", "Unreleased"];
+			}
 			if (isVGC) {
 				return ["Mythical", "Restricted Legendary", "Regular", "NFE", "LC UBER", "LC OU", "LC UU"];
 			}
@@ -623,11 +680,11 @@ process.stdout.write("Building `data/teambuilder-tables.js`... ");
 			if (gen === 'gen7') {
 				return ["CAP", "CAP NFE", "CAP LC", "AG", "Uber", "OU", "(OU)", "UUBL", "UU", "RUBL", "RU", "NUBL", "NU", "PUBL", "PU", "(PU)", "ZU", "(ZU)", "NFE", "LC UBER", "LC OU", "LC UU", "Unreleased"];
 			}
-			return ["CAP", "CAP NFE", "CAP LC", "AG", "Uber", "(Uber)", "OU", "(OU)", "UUBL", "UU", "RUBL", "RU", "NUBL", "NU", "PUBL", "PU", "(PU)", "ZU", "(ZU)", "New", "NFE", "LC UBER", "LC OU", "LC UU", "Unreleased"];
+			return ["CAP", "CAP NFE", "CAP LC", "AG", "Uber", "(Uber)", "OU", "(OU)", "CUBL", "CU", "UUBL", "UU", "RUBL", "RU", "NUBL", "NU", "PUBL", "PU", "(PU)", "ZU", "(ZU)", "New", "NFE", "LC UBER", "LC OU", "LC UU", "Unreleased"];
 		})();
 
 		for (const tier of tierOrder) {
-			if (tier in {OU:1, AG:1, Uber:1, UU:1, "(UU)":1, RU:1, NU:1, "(NU)":1, PU:1, "(PU)":1, ZU:1, "(ZU)":1, NFE:1, "LC UBER":1, "LC OU":1, "LC UU":1, DOU:1, DUU:1, "(DUU)":1, New:1, Legal:1, Regular:1, "Restricted Legendary":1, "CAP LC":1}) {
+			if (tier in {OU:1, AG:1, Uber:1, CU: 1, UU:1, "(UU)":1, RU:1, NU:1, "(NU)":1, PU:1, "(PU)":1, ZU:1, "(ZU)":1, NFE:1, "LC UBER":1, "LC OU":1, "LC UU":1, DOU:1, DUU:1, "(DUU)":1, New:1, Legal:1, Regular:1, "Restricted Legendary":1, "CAP LC":1}) {
 				let usedTier = tier;
 				if (usedTier === "(UU)") usedTier = "RU";
 				if (usedTier === "(NU)") usedTier = "PU";
@@ -963,6 +1020,36 @@ process.stdout.write("Building `data/teambuilder-tables.js`... ");
 			BattleTeambuilderTable['gen8bdsp'].learnsets[id][moveid] = '8g';
 		}
 	}
+	const NewMetaLearnsets = Dex.mod('gen8newmeta').data.Learnsets;
+	for (const id in NewMetaLearnsets) {
+		const species = Dex.mod('gen8newmeta').species.get(id);
+		if (species.isNonstandard && !['Unobtainable', 'CAP'].includes(species.isNonstandard)) continue;
+		const learnset = NewMetaLearnsets[id].learnset;
+		BattleTeambuilderTable['gen8newmeta'].learnsets[id] = {};
+		for (const moveid in learnset) {
+			BattleTeambuilderTable['gen8newmeta'].learnsets[id][moveid] = '8g';
+		}
+	}
+	const NMClassicLearnsets = Dex.mod('gen8nmclassic').data.Learnsets;
+	for (const id in NMClassicLearnsets) {
+		const species = Dex.mod('gen8nmclassic').species.get(id);
+		if (species.isNonstandard && !['Unobtainable', 'CAP'].includes(species.isNonstandard)) continue;
+		const learnset = NMClassicLearnsets[id].learnset;
+		BattleTeambuilderTable['gen8nmclassic'].learnsets[id] = {};
+		for (const moveid in learnset) {
+			BattleTeambuilderTable['gen8nmclassic'].learnsets[id][moveid] = '8g';
+		}
+	}
+	const NMOnlyLearnsets = Dex.mod('gen8nmonly').data.Learnsets;
+	for (const id in NMOnlyLearnsets) {
+		const species = Dex.mod('gen8nmonly').species.get(id);
+		if (species.isNonstandard && !['Unobtainable', 'CAP'].includes(species.isNonstandard)) continue;
+		const learnset = NMOnlyLearnsets[id].learnset;
+		BattleTeambuilderTable['gen8nmonly'].learnsets[id] = {};
+		for (const moveid in learnset) {
+			BattleTeambuilderTable['gen8nmonly'].learnsets[id][moveid] = '8g';
+		}
+	}
 	const DLC1Learnsets = Dex.mod('gen8dlc1').data.Learnsets;
 	for (const id in DLC1Learnsets) {
 		const learnset = DLC1Learnsets[id].learnset;
@@ -1093,7 +1180,7 @@ process.stdout.write("Building `data/teambuilder-tables.js`... ");
 	// Mods
 	//
 
-	for (const mod of ['gen7letsgo', 'gen8bdsp']) {
+	for (const mod of ['gen7letsgo', 'gen8bdsp', 'gen8newmeta', 'gen8nmclassic', 'gen8nmonly']) {
 		const modDex = Dex.mod(mod);
 		const modData = modDex.data;
 		const parentDex = Dex.forGen(modDex.gen);

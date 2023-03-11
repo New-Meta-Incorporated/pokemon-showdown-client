@@ -550,7 +550,7 @@ abstract class BattleTypedSearch<T extends SearchType> {
 	 */
 	set: PokemonSet | null = null;
 
-	protected formatType: 'doubles' | 'bdsp' | 'bdspdoubles' | 'letsgo' | 'metronome' | 'natdex' | 'nfe' |
+	protected formatType: 'doubles' | 'bdsp' | 'bdspdoubles' | 'newmeta' | 'newmetadoubles' | 'nmclassic' | 'nmonly' | 'letsgo' | 'metronome' | 'natdex' | 'nfe' |
 	'dlc1' | 'dlc1doubles' | 'stadium' | 'nmmegaz' | 'nmmegadex' | null = null;
 
 	/**
@@ -613,6 +613,23 @@ abstract class BattleTypedSearch<T extends SearchType> {
 			}
 			format = format.slice(4) as ID;
 			this.dex = Dex.mod('gen8bdsp' as ID);
+		}
+    if (format.includes('newmeta')) {
+			if (format.includes('doubles')) {
+				this.formatType = 'newmetadoubles';
+			} else {
+				this.formatType = 'newmeta';
+			}
+			format = format.slice(4) as ID;
+			this.dex = Dex.mod('gen8newmeta' as ID);
+		}
+    if (format.includes('nmclassic')) {
+			this.formatType = 'nmclassic';
+			this.dex = Dex.mod('gen8nmclassic' as ID);
+		}
+    if (format.includes('nmonly')) {
+			this.formatType = 'nmonly';
+			this.dex = Dex.mod('gen8nmonly' as ID);
 		}
 		if (format.includes('doubles') && this.dex.gen > 4 && !this.formatType) this.formatType = 'doubles';
 		if (format.startsWith('ffa') || format === 'freeforall') this.formatType = 'doubles';
@@ -728,6 +745,9 @@ abstract class BattleTypedSearch<T extends SearchType> {
 	protected firstLearnsetid(speciesid: ID) {
 		let table = BattleTeambuilderTable;
 		if (this.formatType?.startsWith('bdsp')) table = table['gen8bdsp'];
+    if (this.formatType?.startsWith('newmeta')) table = table['gen8newmeta'];
+    if (this.formatType?.startsWith('nmclassic')) table = table['gen8newmetaclassic'];
+    if (this.formatType?.startsWith('nmonly')) table = table['gen8nmonly'];
 		if (this.formatType === 'letsgo') table = table['gen7letsgo'];
 		if (speciesid in table.learnsets) return speciesid;
 		const species = this.dex.species.get(speciesid);
@@ -780,6 +800,9 @@ abstract class BattleTypedSearch<T extends SearchType> {
 		while (learnsetid) {
 			let table = BattleTeambuilderTable;
 			if (this.formatType?.startsWith('bdsp')) table = table['gen8bdsp'];
+      if (this.formatType?.startsWith('newmeta')) table = table['gen8newmeta'];
+      if (this.formatType?.startsWith('nmclassic')) table = table['gen8newmetaclassic'];
+      if (this.formatType?.startsWith('nmonly')) table = table['gen8nmonly'];
 			if (this.formatType === 'letsgo') table = table['gen7letsgo'];
 			let learnset = table.learnsets[learnsetid];
 			if (learnset && (moveid in learnset) && (!this.format.startsWith('tradebacks') ? learnset[moveid].includes(genChar) :
@@ -801,6 +824,10 @@ abstract class BattleTypedSearch<T extends SearchType> {
 			this.formatType === 'letsgo' ? 'gen7letsgo' :
 			this.formatType === 'bdsp' ? 'gen8bdsp' :
 			this.formatType === 'bdspdoubles' ? 'gen8bdspdoubles' :
+      this.formatType === 'newmeta' ? 'gen8newmeta' :
+			this.formatType === 'newmetadoubles' ? 'gen8newmetadoubles' :
+      this.formatType === 'nmclassic' ? 'gen8nmclassic' :
+      this.formatType === 'nmonly' ? 'gen8nmonly' :
 			this.formatType === 'nfe' ? `gen${gen}nfe` :
 			this.formatType === 'dlc1' ? 'gen8dlc1' :
 			this.formatType === 'dlc1doubles' ? 'gen8dlc1doubles' :
@@ -896,7 +923,7 @@ class BattlePokemonSearch extends BattleTypedSearch<'pokemon'> {
 			table = table['gen' + dex.gen + 'vgc'];
 		} else if (
 			table['gen' + dex.gen + 'doubles'] && dex.gen > 4 &&
-			this.formatType !== 'letsgo' && this.formatType !== 'bdspdoubles' && this.formatType !== 'dlc1doubles' &&
+			this.formatType !== 'letsgo' && this.formatType !== 'bdspdoubles' && this.formatType !== 'newmetadoubles' && this.formatType !== 'dlc1doubles' &&
 			(
 				format.includes('doubles') || format.includes('triples') ||
 				format === 'freeforall' || format.startsWith('ffa')
@@ -908,6 +935,12 @@ class BattlePokemonSearch extends BattleTypedSearch<'pokemon'> {
 			table = table['gen' + dex.gen];
 		} else if (this.formatType?.startsWith('bdsp')) {
 			table = table['gen8' + this.formatType];
+    } else if (this.formatType?.startsWith('newmeta')) {
+      table = table['gen8' + this.formatType];
+    } else if (this.formatType?.startsWith('nmclassic')) {
+      table = table['gen8' + this.formatType];
+    } else if (this.formatType?.startsWith('nmonly')) {
+      table = table['gen8' + this.formatType];
 		} else if (this.formatType === 'letsgo') {
 			table = table['gen7letsgo'];
 		} else if (this.formatType === 'natdex') {
@@ -1170,6 +1203,12 @@ class BattleItemSearch extends BattleTypedSearch<'item'> {
 		let table = BattleTeambuilderTable;
 		if (this.formatType?.startsWith('bdsp')) {
 			table = table['gen8bdsp'];
+    } else if (this.formatType === 'newmeta') {
+      table = table['newmeta'];
+    } else if (this.formatType === 'nmclassic') {
+      table = table['nmclassic'];
+    } else if (this.formatType === 'nmonly') {
+      table = table['nmonly'];
 		} else if (this.formatType === 'natdex') {
 			table = table['natdex'];
 		} else if (this.formatType === 'metronome') {
@@ -1460,6 +1499,9 @@ class BattleMoveSearch extends BattleTypedSearch<'move'> {
 		let gen = '' + dex.gen;
 		let lsetTable = BattleTeambuilderTable;
 		if (this.formatType?.startsWith('bdsp')) lsetTable = lsetTable['gen8bdsp'];
+    if (this.formatType?.startsWith('newmeta')) lsetTable = lsetTable['gen8newmeta'];
+    if (this.formatType?.startsWith('nmclassic')) lsetTable = lsetTable['gen8nmclassic'];
+    if (this.formatType?.startsWith('nmonly')) lsetTable = lsetTable['gen8nmonly'];
 		if (this.formatType === 'letsgo') lsetTable = lsetTable['gen7letsgo'];
 		if (this.formatType?.startsWith('dlc1')) lsetTable = lsetTable['gen8dlc1'];
 		while (learnsetid) {
